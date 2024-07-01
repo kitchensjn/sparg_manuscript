@@ -1,2 +1,5 @@
-# sparg
-Using the ancestral recombination graphs to estimate dispersal rates and track the locations genetic ancestors. See XXXXX for the paper on these methods.
+# sparg Manuscript
+
+This repository contains all of the code needed to recreate the figures in the sparg manuscript, found [here](https://doi.org/10.1101/2024.04.10.588900).
+
+## Instructions
