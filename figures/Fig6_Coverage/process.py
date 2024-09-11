@@ -1,3 +1,6 @@
+import sys
+sys.path.append("/Users/jameskitchens/Documents/GitHub/sparg")
+
 import sparg
 import tskit
 import math
@@ -13,16 +16,23 @@ np.random.seed(10)
 
 
 # load and filter the tree sequence
-cutoff = 1000
-ts = tskit.load("../Simulations/UniformStartTwoDims/outputs/S025_R2/rep0_S025_R2.trees")
-samples = list(np.random.choice(ts.samples(), 1000, replace=False))
+cutoff = 2000
+ts = tskit.load("../../simulations/UniformStartTwoDims/outputs/original/S025_I1_R2_W300_D2/rep0_S025_I1_R2_W300_D2.trees")
+
+locations = ts.tables.individuals.location
+x = locations[::3]
+y = locations[1::3]
+central_individuals = np.where((x - 150)**2 + (y - 150)**2 < 25**2)[0]
+appropriate_samples = np.where((ts.tables.nodes.flags == 1) & np.isin(ts.tables.nodes.individual, central_individuals))[0]
+
+samples = list(np.random.choice(appropriate_samples, 500, replace=False))
 ts_sim, map_sim = ts.simplify(samples=samples, map_nodes=True, keep_input_roots=False, keep_unary=True, update_sample_flags=False)
 ts_final, maps_final = sparg.simplify_with_recombination(ts=ts_sim, flag_recomb=True)
 ts_chopped = sparg.chop_arg(ts=ts_final, time=cutoff)
 
 
 # convert tree sequence to a SpatialARG
-spatial_arg = sparg.SpatialARG(ts=ts_chopped)
+spatial_arg = sparg.SpatialARG(ts=ts_chopped, verbose=True)
 
 
 # reset the dispersal rate matrix to the theoretical value
@@ -73,6 +83,17 @@ print("W0 - Complete")
 random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_window(
     df=random_ancestors,
     spatial_arg=spatial_arg,
+    window_size=10,
+    use_theoretical_dispersal=True
+)
+random_ancestors["window_10_error_0"] = random_ancestors["true_location_0"] - random_ancestors["window_10_estimated_location_0"]
+random_ancestors["window_10_abs_error_0"] = abs(random_ancestors["window_10_error_0"])
+random_ancestors.to_csv("random_ancestors.csv")
+print("W10 - Complete")
+
+random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_window(
+    df=random_ancestors,
+    spatial_arg=spatial_arg,
     window_size=100,
     use_theoretical_dispersal=True
 )
@@ -80,6 +101,8 @@ random_ancestors["window_100_error_0"] = random_ancestors["true_location_0"] - r
 random_ancestors["window_100_abs_error_0"] = abs(random_ancestors["window_100_error_0"])
 random_ancestors.to_csv("random_ancestors.csv")
 print("W100 - Complete")
+
+exit()
 
 random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_window(
     df=random_ancestors,
