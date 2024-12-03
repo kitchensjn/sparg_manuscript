@@ -17,15 +17,18 @@ np.random.seed(10)
 
 # load and filter the tree sequence
 cutoff = 2000
-ts = tskit.load("../../simulations/UniformStartTwoDims/outputs/original/S025_I1_R2_W300_D2/rep0_S025_I1_R2_W300_D2.trees")
+ts = tskit.load("../../simulations/UniformStartTwoDims/outputs/original/S025_I1_R2_W100_D2/rep5_S025_I1_R2_W100_D2.trees")
 
 locations = ts.tables.individuals.location
 x = locations[::3]
 y = locations[1::3]
-central_individuals = np.where((x - 150)**2 + (y - 150)**2 < 25**2)[0]
-appropriate_samples = np.where((ts.tables.nodes.flags == 1) & np.isin(ts.tables.nodes.individual, central_individuals))[0]
 
-samples = list(np.random.choice(appropriate_samples, 500, replace=False))
+# if using center sampling
+#central_individuals = np.where((x - 150)**2 + (y - 150)**2 < 25**2)[0]
+#appropriate_samples = np.where((ts.tables.nodes.flags == 1) & np.isin(ts.tables.nodes.individual, central_individuals))[0]
+#samples = list(np.random.choice(appropriate_samples, 500, replace=False))
+
+samples = list(np.random.choice(ts.samples(), 500, replace=False))
 ts_sim, map_sim = ts.simplify(samples=samples, map_nodes=True, keep_input_roots=False, keep_unary=True, update_sample_flags=False)
 ts_final, maps_final = sparg.simplify_with_recombination(ts=ts_sim, flag_recomb=True)
 ts_chopped = sparg.chop_arg(ts=ts_final, time=cutoff)
@@ -36,7 +39,7 @@ spatial_arg = sparg.SpatialARG(ts=ts_chopped, verbose=True)
 
 
 # reset the dispersal rate matrix to the theoretical value
-spatial_arg.dispersal_rate_matrix = np.array([[0.25*0.25+0.5,0],[0,0.25*0.25+0.5]])
+#spatial_arg.dispersal_rate_matrix = np.array([[0.25*0.25+0.5,0],[0,0.25*0.25+0.5]])
 
 
 # create a dataframe of random ancestors in the ARG that we will estimate locations for
@@ -48,7 +51,6 @@ random_ancestors = sparg.generate_random_ancestors_dataframe(
     seed=10
 )
 
-
 # estimate locations using different windows and methods
 random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_midpoint(
     df=random_ancestors,
@@ -57,6 +59,8 @@ random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_midp
 )
 random_ancestors["midpoint_error_0"] = random_ancestors["true_location_0"] - random_ancestors["midpoint_estimated_location_0"]
 random_ancestors["midpoint_abs_error_0"] = abs(random_ancestors["midpoint_error_0"])
+random_ancestors["midpoint_error_1"] = random_ancestors["true_location_1"] - random_ancestors["midpoint_estimated_location_1"]
+random_ancestors["midpoint_abs_error_1"] = abs(random_ancestors["midpoint_error_1"])
 random_ancestors.to_csv("random_ancestors.csv")
 print("Midpoint - Complete")
 
@@ -66,6 +70,8 @@ random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_arg(
 )
 random_ancestors["arg_error_0"] = random_ancestors["true_location_0"] - random_ancestors["arg_estimated_location_0"]
 random_ancestors["arg_abs_error_0"] = abs(random_ancestors["arg_error_0"])
+random_ancestors["arg_error_1"] = random_ancestors["true_location_1"] - random_ancestors["arg_estimated_location_1"]
+random_ancestors["arg_abs_error_1"] = abs(random_ancestors["arg_error_1"])
 random_ancestors.to_csv("random_ancestors.csv")
 print("Full Chromosome - Complete")
 
@@ -73,32 +79,25 @@ random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_wind
     df=random_ancestors,
     spatial_arg=spatial_arg,
     window_size=0,
-    use_theoretical_dispersal=True
+    use_theoretical_dispersal=False
 )
 random_ancestors["window_0_error_0"] = random_ancestors["true_location_0"] - random_ancestors["window_0_estimated_location_0"]
 random_ancestors["window_0_abs_error_0"] = abs(random_ancestors["window_0_error_0"])
+random_ancestors["window_0_error_1"] = random_ancestors["true_location_1"] - random_ancestors["window_0_estimated_location_1"]
+random_ancestors["window_0_abs_error_1"] = abs(random_ancestors["window_0_error_1"])
 random_ancestors.to_csv("random_ancestors.csv")
 print("W0 - Complete")
 
 random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_window(
     df=random_ancestors,
     spatial_arg=spatial_arg,
-    window_size=10,
-    use_theoretical_dispersal=True
-)
-random_ancestors["window_10_error_0"] = random_ancestors["true_location_0"] - random_ancestors["window_10_estimated_location_0"]
-random_ancestors["window_10_abs_error_0"] = abs(random_ancestors["window_10_error_0"])
-random_ancestors.to_csv("random_ancestors.csv")
-print("W10 - Complete")
-
-random_ancestors = sparg.estimate_locations_of_ancestors_in_dataframe_using_window(
-    df=random_ancestors,
-    spatial_arg=spatial_arg,
     window_size=100,
-    use_theoretical_dispersal=True
+    use_theoretical_dispersal=False
 )
 random_ancestors["window_100_error_0"] = random_ancestors["true_location_0"] - random_ancestors["window_100_estimated_location_0"]
 random_ancestors["window_100_abs_error_0"] = abs(random_ancestors["window_100_error_0"])
+random_ancestors["window_100_error_1"] = random_ancestors["true_location_1"] - random_ancestors["window_100_estimated_location_1"]
+random_ancestors["window_100_abs_error_1"] = abs(random_ancestors["window_100_error_1"])
 random_ancestors.to_csv("random_ancestors.csv")
 print("W100 - Complete")
 

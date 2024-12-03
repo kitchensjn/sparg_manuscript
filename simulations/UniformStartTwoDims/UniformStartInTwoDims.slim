@@ -1,16 +1,16 @@
 //adapted from https://pyslim.readthedocs.io/en/latest/vignette_space.html
 initialize() {
     defineConstant("SIGMA_disp", 0.25);
-    defineConstant("fname", "/Users/jameskitchens/Documents/GitHub/sparg_manuscript/figures/Simulations/UniformStartTwoDims/outputs/S025_I1_R2_W300_D2/rep1_S025_I1_R2_W300_D2.trees");
+    defineConstant("fname", "/Users/jameskitchens/Documents/GitHub/sparg_manuscript/simulations/UniformStartTwoDims/outputs/original/S025_I1_R2_W100_D2/rep5_S025_I1_R2_W100_D2.trees");
     defineConstant("L",1e6);
     defineConstant("r",1e-8);
     defineConstant("R",2);
     defineConstant("SIGMA_int",1);
     defineConstant("K",1);
-    defineConstant("W",300.0); 
+    defineConstant("W",100.0); 
     defineConstant("t",10000); 
-    defineConstant("N0",50000);
-    defineConstant("rep",1);
+    defineConstant("N0",10000);
+    defineConstant("rep",5);
 	 setSeed(rep); // set seed for repeatability
     initializeSLiMModelType("nonWF"); // non Wright Fisher
     initializeSLiMOptions(dimensionality="xy"); // two spatial dimensions
