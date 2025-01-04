@@ -1,0 +1,176 @@
+\documentclass[a4paper, 12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{comment}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{bbm}
+\usepackage{bbold}
+\usepackage{etoolbox}
+\usepackage{hyperref}
+\usepackage[sort,round]{natbib}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{amstext}
+\usepackage{amsxtra}
+\usepackage{tikz}
+\usepackage{mathtools}
+\usepackage{setspace}
+\usepackage{listings}
+\usepackage[titletoc]{appendix}
+\usepackage{xcolor}
+\hypersetup{
+    colorlinks,
+    linkcolor={blue!100},
+    citecolor={red!100!black},
+    urlcolor={blue!75!black}
+}
+\usepackage{fancyhdr}
+\pagestyle{plain}
+\usepackage{mathrsfs, enumerate}
+\usepackage{tikz}
+\usepackage{setspace}
+\usepackage{longtable}
+\usepackage{vmargin}
+\usepackage{lineno}
+\usepackage{authblk} % author affiliation
+\bibliographystyle{genetics.bst}
+
+\makeatletter
+\newcommand{\setword}[2]{%
+  \phantomsection
+  #1\def\@currentlabel{\unexpanded{#1}}\label{#2}%
+}
+\makeatother
+
+\setmarginsrb     { 1.25in}  % left margin
+                        { 1.0in}  % top margin
+                        { 1.0in}  % right margin
+                        { 1.0in}  % bottom margin
+                        {  20pt}  % head height
+                        {0.25in}  % head sep
+                        {   9pt}  % foot height
+                        { 0.3in}  % foot sep
+\raggedbottom
+%\setlength{\topskip}{1\topskip \@plus 5\p@}
+\doublehyphendemerits=10000       % No consecutive line hyphens.
+\brokenpenalty=10000              % No broken words across columns/pages.
+\widowpenalty=9999                % Almost no widows at bottom of page.
+\clubpenalty=9999                 % Almost no orphans at top of page.
+\interfootnotelinepenalty=9999    % Almost never break footnotes.
+\pagestyle{plain}
+\onehalfspacing
+
+% \makeindex
+
+
+
+ \newcommand\Chapter[2]{\chapter
+  [#1\hfil\hbox{}\protect\linebreak{\itshape#2}]%
+  {#1\\[2ex]\Large\itshape#2}%
+}
+\DeclareMathOperator{\Var}{\text{Var}}
+\DeclareMathOperator{\Cov}{\text{Cov}}
+
+\newtheorem{note}{NOTE}[section]
+
+\renewenvironment{proof}{{\noindent \textbf{Proof :} }}{ \hfill Q.E.D }
+
+
+\newtheorem{theorem}{Theorem}[section]
+%\newtheorem{proof}{Proof}
+\newtheorem{cor}{Corollary}[theorem]
+\newtheorem{corollary}{Corollary}[theorem]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{definition}{Definition}[section]
+\usepackage{mathtools}
+
+\newcommand{\cA}{\mbox{${\mathcal A}$}}
+\newcommand{\cB}{\mbox{${\mathcal B}$}}
+\newcommand{\cC}{\mbox{${\mathcal C}$}}
+\newcommand{\cD}{\mbox{${\mathcal D}$}}
+\newcommand{\cE}{\mbox{${\mathcal E}$}}
+\newcommand{\cF}{\mbox{${\mathcal F}$}}
+\newcommand{\cG}{\mbox{${\mathcal G}$}}
+\newcommand{\cH}{\mbox{${\mathcal H}$}}
+\newcommand{\cI}{\mbox{${\mathcal I}$}}
+\newcommand{\cJ}{\mbox{${\mathcal J}$}}
+\newcommand{\cK}{\mbox{${\mathcal K}$}}
+\newcommand{\cL}{\mbox{${\mathcal L}$}}
+\newcommand{\cM}{\mbox{${\mathcal M}$}}
+\newcommand{\cN}{\mbox{${\mathcal N}$}}
+\newcommand{\cO}{\mbox{${\mathcal O}$}}
+\newcommand{\cP}{\mbox{${\mathcal P}$}}
+\newcommand{\cQ}{\mbox{${\mathcal Q}$}}
+\newcommand{\cR}{\mbox{${\mathcal R}$}}
+\newcommand{\cS}{\mbox{${\mathcal S}$}}
+\newcommand{\cT}{\mbox{${\mathcal T}$}}
+\newcommand{\cU}{\mbox{${\mathcal U}$}}
+\newcommand{\cV}{\mbox{${\mathcal V}$}}
+\newcommand{\cW}{\mbox{${\mathcal W}$}}
+\newcommand{\cX}{\mbox{${\mathcal X}$}}
+\newcommand{\cY}{\mbox{${\mathcal Y}$}}
+\newcommand{\cZ}{\mbox{${\mathcal Z}$}}
+
+\newcommand{\bA}{\mbox{${\mathbb A}$}}
+\newcommand{\bB}{\mbox{${\mathbb B}$}}
+\newcommand{\bC}{\mbox{${\mathbb C}$}}
+\newcommand{\bD}{\mbox{${\mathbb D}$}}
+\newcommand{\bE}{\mbox{${\mathbb E}$}}
+\newcommand{\bF}{\mbox{${\mathbb F}$}}
+\newcommand{\bG}{\mbox{${\mathbb G}$}}
+\newcommand{\bH}{\mbox{${\mathbb H}$}}
+\newcommand{\bI}{\mbox{${\mathbb I}$}}
+\newcommand{\bJ}{\mbox{${\mathbb J}$}}
+\newcommand{\bK}{\mbox{${\mathbb K}$}}
+\newcommand{\bL}{\mbox{${\mathbb L}$}}
+\newcommand{\bM}{\mbox{${\mathbb M}$}}
+\newcommand{\bN}{\mbox{${\mathbb N}$}}
+\newcommand{\bO}{\mbox{${\mathbb O}$}}
+\newcommand{\bP}{\mbox{${\mathbb P}$}}
+\newcommand{\bQ}{\mbox{${\mathbb Q}$}}
+\newcommand{\bR}{\mbox{${\mathbb R}$}}
+\newcommand{\bS}{\mbox{${\mathbb S}$}}
+\newcommand{\bT}{\mbox{${\mathbb T}$}}
+\newcommand{\bU}{\mbox{${\mathbb U}$}}
+\newcommand{\bV}{\mbox{${\mathbb V}$}}
+\newcommand{\bW}{\mbox{${\mathbb W}$}}
+\newcommand{\bX}{\mbox{${\mathbb X}$}}
+\newcommand{\bY}{\mbox{${\mathbb Y}$}}
+\newcommand{\bZ}{\mbox{${\mathbb Z}$}}
+
+
+\newcommand{\smat}{\mathbf{S}}
+\newcommand{\sinv}{\mathbf{S}^{-1}}
+\newcommand{\spath}{\mathbf{S}_p}
+\newcommand{\spathg}{\mathbf{S}_p^{g-}}
+\newcommand{\ldata}{\vec{\ell^*}}
+\newcommand{\lvec}{\vec{\ell} \ }
+\newcommand{\lpvec}{\vec{\ell_p}}
+\newcommand{\xdata}{\vec{\mathtt{x}^*}}
+\newcommand{\xvec}{\vec{\mathtt{x}}}
+
+\newcommand{\muvec}{\vec{\mu}}
+\newcommand{\Rp}{\mathbf{R}}
+\newcommand{\Mp}{\mathbf{M}_p}
+\newcommand{\Vp}{\mathbf{V}_p}
+\newcommand{\Pp}{\mathbf{P}}
+\newcommand{\Lvec}{\overrightarrow{L}}
+\newcommand{\Lpvec}{\overrightarrow{L_p}}
+\newcommand{\Lint}{L_a}
+\newcommand{\muMLE}{\widehat{\mu}}
+\newcommand{\sigmaMLE}{\widehat{\sigma^2}}
+\newcommand{\muvecMLE}{\widehat{\vec{\mu}}}
+\newcommand{\onevec}[1]{\mathbb{1}_#1}
+\newcommand{\savec}{\vec{s_a}}
+\newcommand{\trp}{\text{T}}
+\graphicspath{ {Images/} }
+
+\newcommand{\mo}[1] {\textcolor{blue}{[mo: #1]}}

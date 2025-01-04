@@ -1,0 +1,64 @@
+[project]
+name = "sparg"
+version = "2.0.0"
+authors = [
+    {name="Puneeth Deraje"},
+    {name="James Kitchens",email="jkitchens@ucdavis.edu"},
+    {name="Graham Coop"},
+    {name="Matthew Osmond"},
+]
+description = "Using the ancestral recombination graphs to estimate dispersal rates and track the locations of genetic ancestors. See XXXXX for the paper on these methods."
+readme = "README.md"
+keywords = [
+    "spatial population genetics",
+    "tree sequence",
+    "ancestral recombination graph",
+    "Brownian motion",
+    "dispersal",
+]
+requires-python = ">=3.7"
+dependencies = [
+    "numpy",
+    "sympy",
+    "scipy",
+    "tqdm",
+    "pandas",
+    "tskit",
+    "matplotlib",
+    "ipywidgets",
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3 :: Only",
+    "License :: OSI Approved :: MIT License",
+    "Development Status :: 3 - Alpha",
+    "Environment :: Other Environment",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/osmond-lab/sparg"
+"Changelog" = "https://github.com/osmond-lab/sparg/blob/main/CHANGELOG.rst"
+"Bug Tracker" = "https://github.com/osmond-lab/sparg/issues"
+
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+    "oldest-supported-numpy"
+]
+
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools_scm]
+write_to = "sparg/_version.py"
